@@ -2,6 +2,10 @@
 const form = document.getElementById('task-form')
 const error = document.querySelector('.text')
 const parent = document.querySelector('.collection')
+const clear = document.getElementById('clear')
+const filter = document.getElementById('filter')
+
+
 form.addEventListener('submit',(e)=>{
     e.preventDefault()
     // Getting the value from UI
@@ -34,5 +38,53 @@ form.addEventListener('submit',(e)=>{
 
             // Showing element with value typed by the user in UI
         parent.appendChild(li)
+        document.getElementById('task').value = ''
+
+
+
     }
+})
+
+parent.addEventListener('click',(e)=>{
+
+
+    if(e.target.classList.contains('fa-remove')){
+
+        const c = confirm('Are you sure you want to delete the task')
+
+        if(c){
+            const data = e.target.parentNode.parentNode
+            parent.removeChild(data)
+        }else{
+            
+        }
+    }else{
+        console.log('clicked outside')
+    }
+})
+
+clear.addEventListener('click',()=>{
+    const c = confirm('Are you sure')
+    if(c){
+    const childs = document.querySelectorAll('.collection-item')  
+    childs.forEach((child)=>{
+        parent.removeChild(child)
+    })
+        // parent.innerHTML  = ''
+    }else{
+
+    }
+})
+
+filter.addEventListener('input',(e)=>{
+    console.log(e.target.value)
+    const childs = document.querySelectorAll('.collection-item')
+    
+    childs.forEach((child,index)=>{
+        if(child.textContent.toLocaleUpperCase().includes(e.target.value.toLocaleUpperCase())){
+            child.style.display = 'block'
+        }else{
+            child.style.display = 'none'
+        }
+    })
 })
